@@ -828,35 +828,64 @@ require('lazy').setup({
   },
 
   {
-    'folke/tokyonight.nvim',
+    'rose-pine/neovim',
+    name = 'rose-pine',
     lazy = false,
     priority = 1000,
     opts = function()
-      require('tokyonight').setup {
-        style = 'moon',
-        transparent = true, -- Ativa a transparência
-        terminal_colors = true,
-        styles = {
-          comments = { italic = true },
-          keywords = { italic = true },
-          functions = {},
-          variables = {},
-          sidebars = 'transparent', -- Define a transparência também para sidebars
-          floats = 'transparent', -- Define a transparência para janelas flutuantes
+      require('rose-pine').setup {
+        variant = 'main', -- Alternativas: 'main', 'moon', 'dawn'. Escolha a mais próxima do estilo que você deseja.
+        dark_variant = 'main', -- Similar ao estilo 'moon' do tokyonight
+        disable_background = true, -- Ativa a transparência
+        disable_float_background = true, -- Transparência para janelas flutuantes
+        bold_vert_split = false, -- Remove borda vertical entre divisões
+        disable_italics = false, -- Habilita itálico para certos elementos
+        groups = {
+          background = 'none', -- Remove o fundo da janela principal
+          panel = 'none', -- Remove o fundo das sidebars e painéis
         },
-        on_colors = function(colors)
-          colors.fg = '#ffffff' -- Altera a cor de primeiro plano para branco
-        end,
-        on_highlights = function(highlights, colors)
-          highlights.Normal = { fg = colors.fg, bg = 'NONE' } -- Remove a cor de fundo
-          highlights.NormalFloat = { bg = 'NONE' } -- Transforma janelas flutuantes em transparentes
-        end,
-        cache = true,
+        highlight_groups = {
+          Normal = { fg = '#ffffff', bg = 'NONE' }, -- Cor de primeiro plano branca e fundo transparente
+          NormalFloat = { bg = 'NONE' }, -- Janelas flutuantes transparentes
+          Comment = { italic = true }, -- Comentários em itálico
+          Keyword = { italic = true }, -- Palavras-chave em itálico
+        },
       }
 
-      vim.cmd [[colorscheme tokyonight-moon]]
+      vim.cmd [[colorscheme rose-pine]]
     end,
   },
+
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = function()
+  --     require('tokyonight').setup {
+  --       style = 'moon',
+  --       transparent = true, -- Ativa a transparência
+  --       terminal_colors = true,
+  --       styles = {
+  --         comments = { italic = true },
+  --         keywords = { italic = true },
+  --         functions = {},
+  --         variables = {},
+  --         sidebars = 'transparent', -- Define a transparência também para sidebars
+  --         floats = 'transparent', -- Define a transparência para janelas flutuantes
+  --       },
+  --       on_colors = function(colors)
+  --         colors.fg = '#ffffff' -- Altera a cor de primeiro plano para branco
+  --       end,
+  --       on_highlights = function(highlights, colors)
+  --         highlights.Normal = { fg = colors.fg, bg = 'NONE' } -- Remove a cor de fundo
+  --         highlights.NormalFloat = { bg = 'NONE' } -- Transforma janelas flutuantes em transparentes
+  --       end,
+  --       cache = true,
+  --     }
+  --
+  --     vim.cmd [[colorscheme tokyonight-moon]]
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
